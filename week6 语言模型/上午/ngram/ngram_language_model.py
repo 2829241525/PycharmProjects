@@ -40,13 +40,6 @@ from collections import defaultdict
 # 1-gram: {"the": 1, "quick": 1, "brown": 1, "fox": 1, "jumps": 1, "over": 1, "lazy": 1, "dog": 1}
 # 2-gram: {"the quick": 1, "quick brown": 1, "brown fox": 1, "fox jumps": 1, "jumps over": 1, "over the": 1, "the lazy": 1, "lazy dog": 1}
 # 3-gram: {"the quick brown": 1, "quick brown fox": 1, "brown fox jumps": 1, "fox jumps over": 1, "jumps over the": 1, "over the lazy": 1, "the lazy dog": 1}
-# 4-gram: {"the quick brown fox": 1, "quick brown fox jumps": 1, "brown fox jumps over": 1, "fox jumps over the": 1, "jumps over the lazy": 1, "over the lazy dog": 1}
-# 5-gram: {"the quick brown fox jumps": 1, "quick brown fox jumps over": 1, "brown fox jumps over the": 1, "fox jumps over the lazy": 1, "jumps over the lazy dog": 1}
-# 6-gram: {"the quick brown fox jumps over": 1, "quick brown fox jumps over the": 1, "brown fox jumps over the lazy": 1, "fox jumps over the lazy dog": 1}
-# 7-gram: {"the quick brown fox jumps over the": 1, "quick brown fox jumps over the lazy": 1, "brown fox jumps over the lazy dog": 1}
-# 8-gram: {"the quick brown fox jumps over the lazy": 1, "quick brown fox jumps over the lazy dog": 1}
-# 9-gram: {"the quick brown fox jumps over the lazy dog": 1}
-# 10-gram: {"the quick brown fox jumps over the lazy dog": 1}
 
 
 # 2. 计算ngram概率
@@ -59,13 +52,6 @@ from collections import defaultdict
 # 例如，在一元语言模型中，"the"的出现频率是1/10，那么"the"的出现的概率就是1/10。
 # 例如，在二元语言模型中，"the quick"的出现频率是1/10，那么"the quick"的出现的概率就是1/10。
 # 例如，在三元语言模型中，"the quick brown"的出现频率是1/10，那么"the quick brown"的出现的概率就是1/10。
-# 例如，在四元语言模型中，"the quick brown fox"的出现频率是1/10，那么"the quick brown fox"的出现的概率就是1/10。
-# 例如，在五元语言模型中，"the quick brown fox jumps"的出现频率是1/10，那么"the quick brown fox jumps"的出现的概率就是1/10。
-# 例如，在六元语言模型中，"the quick brown fox jumps over"的出现频率是1/10，那么"the quick brown fox jumps over"的出现的概率就是1/10。
-# 例如，在七元语言模型中，"the quick brown fox jumps over the"的出现频率是1/10，那么"the quick brown fox jumps over the"的出现的概率就是1/10。
-# 例如，在八元语言模型中，"the quick brown fox jumps over the lazy"的出现频率是1/10，那么"the quick brown fox jumps over the lazy"的出现的概率就是1/10。
-# 例如，在九元语言模型中，"the quick brown fox jumps over the lazy dog"的出现频率是1/10，那么"the quick brown fox jumps over the lazy dog"的出现的概率就是1/10。
-# 例如，在十元语言模型中，"the quick brown fox jumps over the lazy dog"的出现频率是1/10，那么"the quick brown fox jumps over the lazy dog"的出现的概率就是1/10。
 
 
 # 3. 利用语言模型
@@ -75,35 +61,18 @@ from collections import defaultdict
 # 1-gram: P("the"|SOS) * P("quick"|the) * P("brown"|quick) * P("fox"|brown) * P("jumps"|fox) * P("over"|jumps) * P("the"|over) * P("lazy"|the) * P("dog"|lazy) * P(EOS|dog)
 # 2-gram: P("the quick"|SOS) * P("brown"|the quick) * P("fox"|brown) * P("jumps"|fox) * P("over"|jumps) * P("the"|over) * P("lazy"|the) * P("dog"|lazy) * P(EOS|dog)
 # 3-gram: P("the quick brown"|SOS) * P("fox"|the quick brown) * P("jumps"|fox) * P("over"|jumps) * P("the"|over) * P("lazy"|the) * P("dog"|lazy) * P(EOS|dog)
-# 4-gram: P("the quick brown fox"|SOS) * P("jumps"|the quick brown fox) * P("over"|jumps) * P("the"|over) * P("lazy"|the) * P("dog"|lazy) * P(EOS|dog)
-# 5-gram: P("the quick brown fox jumps"|SOS) * P("over"|the quick brown fox jumps) * P("the"|over) * P("lazy"|the) * P("dog"|lazy) * P(EOS|dog)
-# 6-gram: P("the quick brown fox jumps over"|SOS) * P("the"|the quick brown fox jumps over) * P("lazy"|the) * P("dog"|lazy) * P(EOS|dog)
-# 7-gram: P("the quick brown fox jumps over the"|SOS) * P("lazy"|the quick brown fox jumps over the) * P("dog"|lazy) * P(EOS|dog)
-# 8-gram: P("the quick brown fox jumps over the lazy"|SOS) * P("dog"|the quick brown fox jumps over the lazy) * P(EOS|dog)
-# 9-gram: P("the quick brown fox jumps over the lazy dog"|SOS) * P(EOS|the quick brown fox jumps over the lazy dog)
-# 10-gram: P("the quick brown fox jumps over the lazy dog"|SOS) * P(EOS|the quick brown fox jumps over the lazy dog)
+
 # 其中，SOS表示句子开始的标识符，EOS表示句子结束的标识符。
 # 利用语言模型计算句子的概率时，我们可以用前面的ngram概率来计算后面的ngram概率。
 # 例如，在一元语言模型中，"the"的出现的概率是1/10，那么"the"的出现的概率就是1/10。
 # 例如，在二元语言模型中，"the quick"的出现的概率是1/10，那么"the quick"的出现的概率就是1/10。
 # 例如，在三元语言模型中，"the quick brown"的出现的概率是1/10，那么"the quick brown"的出现的概率就是1/10。
-# 例如，在四元语言模型中，"the quick brown fox"的出现的概率是1/10，那么"the quick brown fox"的出现的概率就是1/10。
-# 例如，在五元语言模型中，"the quick brown fox jumps"的出现的概率是1/10，那么"the quick brown fox jumps"的出现的概率就是1/10。
-# 例如，在六元语言模型中，"the quick brown fox jumps over"的出现的概率是1/10，那么"the quick brown fox jumps over"的出现的概率就是1/10。
-# 例如，在七元语言模型中，"the quick brown fox jumps over the"的出现的概率是1/10，那么"the quick brown fox jumps over the"的出现的概率就是1/10。
-# 例如，在八元语言模型中，"the quick brown fox jumps over the lazy"的出现的概率是1/10，那么"the quick brown fox jumps over the lazy"的出现的概率就是1/10。
-# 例如，在九元语言模型中，"the quick brown fox jumps over the lazy dog"的出现的概率是1/10，那么"the quick brown fox jumps over the lazy dog"的出现的概率就是1/10。
-# 例如，在十元语言模型中，"the quick brown fox jumps over the lazy dog"的出现的概率是1/10，那么"the quick brown fox jumps over the lazy dog"的出现的概率就是1/10。
+
 # 最后，我们可以将这些概率相乘，得到整个句子的概率。
 # 例如，在一元语言模型中，"the"的出现的概率是1/10，"quick"的出现的概率是1/10，"brown"的出现的概率是1/10，"fox"的出现的概率是1/10，"jumps"的出现的概率是1/10，"over"的出现的概率是1/10，"the"的出现的概率是1/10，"lazy"的出现的概率是1/10，"dog"的出现的概率是1/10，那么"the quick brown fox jumps over the lazy dog"的出现的概率就是1/10。
 # 例如，在二元语言模型中，"the quick"的出现的概率是1/10，"brown"的出现的概率是1/10，"fox"的出现的概率是1/10，"jumps"的出现的概率是1/10，"over"的出现的概率是1/10，"the"的出现的概率是1/10，"lazy"的出现的概率是1/10，"dog"的出现的概率是1/10，那么"the quick brown fox jumps over the lazy dog"的出现的概率就是1/10。
 # 例如，在三元语言模型中，"the quick brown"的出现的概率是1/10，"fox"的出现的概率是1/10，"jumps"的出现的概率是1/10，"over"的出现的概率是1/10，"the"的出现的概率是1/10，"lazy"的出现的概率是1/10，"dog"的出现的概率是1/10，那么"the quick brown fox jumps over the lazy dog"的出现的概率就是1/10。
-# 例如，在四元语言模型中，"the quick brown fox"的出现的概率是1/10，"jumps"的出现的概率是1/10，"over"的出现的概率是1/10，"the"的出现的概率是1/10，"lazy"的出现的概率是1/10，"dog"的出现的概率是1/10，那么"the quick brown fox jumps over the lazy dog"的出现的概率就是1/10。
-# 例如，在五元语言模型中，"the quick brown fox jumps"的出现的概率是1/10，"over"的出现的概率是1/10，"the"的出现的概率是1/10，"lazy"的出现的概率是1/10，"dog"的出现的概率是1/10，那么"the quick brown fox jumps over the lazy dog"的出现的概率就是1/10。
-# 例如，在六元语言模型中，"the quick brown fox jumps over"的出现的概率是1/10，"the"的出现的概率是1/10，"lazy"的出现的概率是1/10，"dog"的出现的概率是1/10，那么"the quick brown fox jumps over the lazy dog"的出现的概率就是1/10。
-# 例如，在七元语言模型中，"the quick brown fox jumps over the"的出现的概率是1/10，"lazy"的出现的概率是1/10，"dog"的出现的概率是1/10，那么"the quick brown fox jumps over the lazy dog"的出现的概率就是1/10。
-# 例如，在八元语言模型中，"the quick brown fox jumps over the lazy"的出现的概率是1/10，"dog"的出现的概率是1/10，那么"the quick brown fox jumps over the lazy dog"的出现的概率就是1/10。
-# 例如，在九元语言模型中，"the quick brown fox jumps over the lazy dog"的出现的概率是1/10，那么"the quick brown fox jumps over the lazy dog"的出现的概率就是1/10。
+
 # 因此，语言模型可以用来计算一个句子的概率，即给定一个句子，计算其出现的概率。
 
 
