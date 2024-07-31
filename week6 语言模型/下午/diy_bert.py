@@ -10,7 +10,7 @@ from transformers import BertModel
 
 '''
 
-bert = BertModel.from_pretrained(r"F:\Desktop\work_space\pretrain_models\bert-base-chinese", return_dict=False)
+bert = BertModel.from_pretrained(r"C:\Users\Lenovo\PycharmProjects\pythonProject\week6 语言模型\bert-base-chinese", return_dict=False)
 state_dict = bert.state_dict()
 bert.eval()
 x = np.array([2450, 15486, 102, 2110])   #假想成4个字的句子
