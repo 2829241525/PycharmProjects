@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 
 """
 
-基于pytorch框架编写模型训练
+基于pytorch框架编写模型训练  下午 01:34
 实现一个自行构造的找规律(机器学习)任务
 规律：x是一个5维向量，如果第1个数>第5个数，则为正样本，反之为负样本
 
@@ -19,7 +19,7 @@ import matplotlib.pyplot as plt
 class TorchModel(nn.Module):
     def __init__(self, input_size):
         super(TorchModel, self).__init__()
-        self.linear = nn.Linear(input_size, 1)  # 线性层
+        self.linear = nn.Linear(input_size, 1,True)  # 线性层
         self.activation = torch.sigmoid  # sigmoid归一化函数
         self.loss = nn.functional.mse_loss  # loss函数采用均方差损失
 
@@ -131,7 +131,7 @@ def predict(model_path, input_vec):
 
 
 if __name__ == "__main__":
-    # main()
+    main()
     test_vec = [[0.07889086,0.15229675,0.31082123,0.03504317,0.18920843],
                 [0.94963533,0.5524256,0.95758807,0.95520434,0.84890681],
                 [0.78797868,0.67482528,0.13625847,0.34675372,0.19871392],

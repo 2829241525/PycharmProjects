@@ -10,7 +10,7 @@ x = np.array([[1,2,3],
               [4,5,6]])
 
 #
-print(x.ndim)
+print(x.ndim) # 维度
 print(x.shape)
 print(x.size)
 print(np.sum(x))
