@@ -5,9 +5,10 @@ import torch.nn as nn
 import numpy as np
 import copy
 
-from adam import learning_rate
+import adam
 
 """
+上午0:37
 基于pytorch的网络编写
 手动实现梯度计算和反向传播
 加入激活函数
