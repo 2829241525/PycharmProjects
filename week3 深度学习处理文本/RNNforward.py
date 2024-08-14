@@ -15,7 +15,7 @@ import numpy as np
 class TorchRNN(nn.Module):
     def __init__(self, input_size, hidden_size):
         super(TorchRNN, self).__init__()
-        self.layer = nn.RNN(input_size, hidden_size, bias=False, batch_first=True)
+        self.layer = nn.RNN(input_size, hidden_size, bias=False, batch_first=True)#输入，输出，b，是否batch_first
 
     def forward(self, x):
         return self.layer(x)

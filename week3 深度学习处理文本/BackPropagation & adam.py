@@ -34,7 +34,7 @@ class TorchModel(nn.Module):
 #自定义模型，接受一个参数矩阵作为入参
 class DiyModel:
     def __init__(self, weight):
-        self.weight = weight
+        self.weight = weight  #获取Weight参数
 
     def forward(self, x, y=None):
         x = np.dot(x, self.weight.T) #矩阵相乘
@@ -54,11 +54,11 @@ class DiyModel:
 
     #手动实现梯度计算
     def calculate_grad(self, y_pred, y_true, x):
-        #前向过程
+        #前向过程，计算梯度外层
         # wx = np.dot(self.weight, x)
         # sigmoid_wx = self.diy_sigmoid(wx)
         # loss = self.diy_mse_loss(sigmoid_wx, y_true)
-        #反向过程
+        #反向过程，计算梯度
         # 均方差函数 (y_pred - y_true) ^ 2 / n 的导数 = 2 * (y_pred - y_true) / n , 结果为2维向量
         grad_mse = 2/len(x) * (y_pred - y_true)
         # sigmoid函数 y = 1/(1+e^(-x)) 的导数 = y * (1 - y), 结果为2维向量
@@ -81,7 +81,7 @@ def diy_sgd(grad, weight, learning_rate):
 #adam梯度更新，手写
 def diy_adam(grad, weight):
     #参数应当放在外面，此处为保持后方代码整洁简单实现一步
-    alpha = 1e-3  #学习率
+    alpha = 1e-3  #学习率0.001
     beta1 = 0.9   #超参数
     beta2 = 0.999 #超参数
     eps = 1e-8    #超参数
@@ -140,6 +140,6 @@ update_torch_model_w = torch_model.state_dict()["layer.weight"]
 print(update_torch_model_w, "torch更新后权重")
 # #
 # # #手动梯度更新
-# diy_update_w = diy_sgd(grad, numpy_model_w, learning_rate)
+#diy_update_w = diy_sgd(grad, numpy_model_w, learning_rate)
 diy_update_w = diy_adam(grad, numpy_model_w)
 print(diy_update_w, "diy更新权重")

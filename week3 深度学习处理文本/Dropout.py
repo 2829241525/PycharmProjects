@@ -13,7 +13,7 @@ import numpy as np
 import torch
 
 x = torch.Tensor([1,2,3,4,5,6,7,8,9])
-dp_layer = torch.nn.Dropout(0.1)
+dp_layer = torch.nn.Dropout(0.1)  #每一个数字的概率为0.1，有可能全部为0
 dp_x = dp_layer(x)
 print(dp_x)
 

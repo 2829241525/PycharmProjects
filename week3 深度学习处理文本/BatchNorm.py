@@ -3,7 +3,7 @@ import numpy as np
 
 x = np.random.random((4, 5))
 
-bn = torch.nn.BatchNorm1d(5)
+bn = torch.nn.BatchNorm1d(5)#1d batch normalization
 
 y = bn(torch.from_numpy(x).float())
 
