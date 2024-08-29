@@ -16,6 +16,8 @@ bert.eval()
 x = np.array([2450, 15486, 102, 2110])   #假想成4个字的句子
 torch_x = torch.LongTensor([x])          #pytorch形式输入
 seqence_output, pooler_output = bert(torch_x)
+#seqence_output，文本长度*768，即为bert的输出，每个字过完12层后得到的输出
+# pooler_output为[1, hidden_size], 即为句首符，经过ebd后在进过一个线性层，用于分类
 print(seqence_output.shape, pooler_output.shape)
 # print(seqence_output, pooler_output)
 
@@ -39,10 +41,10 @@ class DiyBert:
 
     def load_weights(self, state_dict):
         #embedding部分
-        self.word_embeddings = state_dict["embeddings.word_embeddings.weight"].numpy()
-        self.position_embeddings = state_dict["embeddings.position_embeddings.weight"].numpy()
-        self.token_type_embeddings = state_dict["embeddings.token_type_embeddings.weight"].numpy()
-        self.embeddings_layer_norm_weight = state_dict["embeddings.LayerNorm.weight"].numpy()
+        self.word_embeddings = state_dict["embeddings.word_embeddings.weight"].numpy() #词嵌入矩阵
+        self.position_embeddings = state_dict["embeddings.position_embeddings.weight"].numpy() #位置嵌入矩阵
+        self.token_type_embeddings = state_dict["embeddings.token_type_embeddings.weight"].numpy() #token类型嵌入矩阵
+        self.embeddings_layer_norm_weight = state_dict["embeddings.LayerNorm.weight"].numpy() #归一化层权重
         self.embeddings_layer_norm_bias = state_dict["embeddings.LayerNorm.bias"].numpy()
         self.transformer_weights = []
         #transformer部分，有多层
@@ -79,7 +81,7 @@ class DiyBert:
         pe = self.get_embedding(self.position_embeddings, np.array(list(range(len(x)))))  # shpae: [max_len, hidden_size]
         # token type embedding,单输入的情况下为[0, 0, 0, 0]
         te = self.get_embedding(self.token_type_embeddings, np.array([0] * len(x)))  # shpae: [max_len, hidden_size]
-        embedding = we + pe + te
+        embedding = we + pe + te #三者相加，所以顺序不重要
         # 加和后有一个归一化层
         embedding = self.layer_norm(embedding, self.embeddings_layer_norm_weight, self.embeddings_layer_norm_bias)  # shpae: [max_len, hidden_size]
         return embedding

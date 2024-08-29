@@ -28,7 +28,7 @@ class TorchModel(nn.Module):
 
         self.classify = nn.Linear(input_dim, 3)
         self.activation = torch.sigmoid     #sigmoid做激活函数
-        self.dropout = nn.Dropout(0.5)
+        self.dropout = nn.Dropout(0.1)
         self.loss = nn.functional.cross_entropy
 
     #当输入真实标签，返回loss值；无真实标签，返回预测值

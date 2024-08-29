@@ -21,9 +21,9 @@ class TorchModel(nn.Module):
         self.rnn_layer = nn.RNN(input_size=input_dim,
                             hidden_size=hidden_size,
                             batch_first=True,
-                            num_layers=num_rnn_layers,
+                            num_layers=num_rnn_layers,#该参数控制rnn的层数，默认为1，如果设置为2，则会有两个RNN层
                             )
-        self.classify = nn.Linear(hidden_size, 2)
+        self.classify = nn.Linear(hidden_size, 2)#输出层，输出为2分类，0或1
         self.loss_func = nn.CrossEntropyLoss(ignore_index=-100) #-100补位字符
 
     #当输入真实标签，返回loss值；无真实标签，返回预测值
@@ -100,7 +100,7 @@ def build_vocab(vocab_path):
 #建立数据集
 def build_dataset(corpus_path, vocab, max_length, batch_size):
     dataset = Dataset(corpus_path, vocab, max_length) #diy __len__ __getitem__
-    data_loader = DataLoader(dataset, shuffle=True, batch_size=batch_size) #torch shuffle洗牌
+    data_loader = DataLoader(dataset, shuffle=True, batch_size=batch_size) #torch shuffle洗牌,自动打乱数据集，batch_size控制每次训练的样本个数
     return data_loader
 
 
