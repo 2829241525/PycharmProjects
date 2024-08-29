@@ -77,14 +77,14 @@ if __name__ == "__main__":
     #对比所有模型
     #中间日志可以关掉，避免输出过多信息
     # 超参数的网格搜索
-    # for model in ["gated_cnn"]:
-    #     Config["model_type"] = model
-    #     for lr in [1e-3, 1e-4]:
-    #         Config["learning_rate"] = lr
-    #         for hidden_size in [128]:
-    #             Config["hidden_size"] = hidden_size
-    #             for batch_size in [64, 128]:
-    #                 Config["batch_size"] = batch_size
-    #                 for pooling_style in ["avg"]:
-    #                     Config["pooling_style"] = pooling_style
-    #                     print("最后一轮准确率：", main(Config), "当前配置：", Config)
+    for model in ["gated_cnn"]:
+        Config["model_type"] = model
+        for lr in [1e-3, 1e-4]:
+            Config["learning_rate"] = lr
+            for hidden_size in [128]:
+                Config["hidden_size"] = hidden_size
+                for batch_size in [64, 128]:
+                    Config["batch_size"] = batch_size
+                    for pooling_style in ["avg"]:
+                        Config["pooling_style"] = pooling_style
+                        print("最后一轮准确率：", main(Config), "当前配置：", Config)
