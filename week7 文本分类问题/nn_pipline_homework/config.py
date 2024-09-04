@@ -6,8 +6,9 @@
 
 Config = {
     "model_path": "output",
-    "train_data_path": "../data/train_tag_news.json",
-    "valid_data_path": "../data/valid_tag_news.json",
+    "date_source": "../data/文本分类练习.csv",
+    "train_data_path": "../data/train_mall_news.json",
+    "valid_data_path": "../data/valid_mall_news.json",
     "vocab_path":"chars.txt",
     "model_type":"bert",
     "max_length": 30,
