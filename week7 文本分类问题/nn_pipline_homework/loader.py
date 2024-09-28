@@ -19,11 +19,13 @@ class DataGenerator:
     def __init__(self, data_path, config):
         self.config = config
         self.path = data_path
+        self.index_to_label = {0: '差评', 1: '好评'}
+        self.label_to_index = dict((y, x) for x, y in self.index_to_label.items())
+        self.config["class_num"] = len(self.index_to_label)
         if self.config["model_type"] == "bert":
             self.tokenizer = BertTokenizer.from_pretrained(config["pretrain_model_path"])
         self.vocab = load_vocab(config["vocab_path"])
         self.config["vocab_size"] = len(self.vocab)
-        self.dataGenerate()
         self.load()
 
 
@@ -57,12 +59,16 @@ class DataGenerator:
         self.data = []
         with open(self.path, encoding="utf8") as f:
             for line in f:
-                line = json.loads(line)
-                tag = line["label"]
-                label = self.label_to_index[tag]
-                title = line["review"]
+                if line.startswith("0,"):
+                    label = 0
+                elif line.startswith("1,"):
+                    label = 1
+                else:
+                    continue
+                title = line[2:].strip()
                 if self.config["model_type"] == "bert":
-                    input_id = self.tokenizer.encode(title, max_length=self.config["max_length"], pad_to_max_length=True)
+                    input_id = self.tokenizer.encode(title, max_length=self.config["max_length"],
+                                                     pad_to_max_length=True)
                 else:
                     input_id = self.encode_sentence(title)
                 input_id = torch.LongTensor(input_id)

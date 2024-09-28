@@ -26,6 +26,7 @@ class SentenceEncoder(nn.Module):
         # x, _ = self.lstm(x)
         #使用线性层
         x = self.layer(x)
+        # max pooling,先替换维度，将字符长度的维度替换到最外围，在对该维度进行目标窗口的池化（压缩）
         x = nn.functional.max_pool1d(x.transpose(1, 2), x.shape[1]).squeeze()
         return x
 
@@ -86,6 +87,7 @@ if __name__ == "__main__":
     model = SiameseNetwork(Config)
     s1 = torch.LongTensor([[1,2,3,0], [2,2,0,0]])
     s2 = torch.LongTensor([[1,2,3,4], [3,2,3,4]])
+    #告诉模型是否是正样本
     l = torch.LongTensor([[1],[0]])
     y = model(s1, s2, l)
     print(y)

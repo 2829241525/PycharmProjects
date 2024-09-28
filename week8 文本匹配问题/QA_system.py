@@ -112,7 +112,7 @@ class QASystem:
 
 
 if __name__ == '__main__':
-    qas = QASystem("data/train.json", "bm25")
+    qas = QASystem("data/train.json", "word2vec")
     question = "话费是否包月超了"
     res = qas.query(question)
     print(question)

@@ -4,7 +4,7 @@ import numpy as np
 '''
 基于kd树的向量快速查找
 '''
-
+#下午 02:11
 class Node(object):
     def __init__(self):
         """Node class to build tree leaves.
