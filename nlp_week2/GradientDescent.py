@@ -68,7 +68,7 @@ for epoch in range(10000):
     epoch_loss /= len(X)
     print(f"当前权重:w1:{w1} w2:{w2} w3:{w3}")
     print("第%d轮， loss %f" %(epoch, epoch_loss))
-    if epoch_loss < 0.001:
+    if epoch_loss < 0.0000001:
         break
 
 print(f"训练后权重:w1:{w1} w2:{w2} w3:{w3}")
