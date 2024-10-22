@@ -22,7 +22,7 @@ class LanguageModel(nn.Module):
         # self.embedding = nn.Embedding(len(vocab), input_dim)
         # self.layer = nn.LSTM(input_dim, input_dim, num_layers=1, batch_first=True)
 
-        self.bert = BertModel.from_pretrained(pretrain_model_path, return_dict=False)
+        self.bert = BertModel.from_pretrained(pretrain_model_path, return_dict=False,attn_implementation='eager')
 
         self.classify = nn.Linear(hidden_size, vocab_size)
         self.loss = nn.CrossEntropyLoss(ignore_index=-1)
