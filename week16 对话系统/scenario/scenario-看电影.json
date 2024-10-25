@@ -1,0 +1,23 @@
+[
+{
+"id":"node1",
+"intent":["我想看电影"],
+"slot":["#电影类型#", "#电影时间#"],
+"action":["select 电影 where 类型=#电影类型# and 时间=#电影时间#"],
+"response":"为您推荐这一款，#电影类型#类型，#电影时间#播出的电影，产品连接：xxx",
+"childnode":["node2", "node3"]
+},
+{
+"id":"node2",
+"intent":["类型有哪些"],
+"slot":["#恐怖片#", "#喜剧片#", "#悬疑片#"],
+"action":["option_type"],
+"response":"好的，为您推荐以下类型：#恐怖片#、#喜剧片#、#悬疑片#"
+},
+{
+"id":"node3",
+"intent":["播出时间有哪些"],
+"action":["TAKE_ORDER"],
+"response":"已为您下单，谢谢惠顾，流程结束"
+}
+]
