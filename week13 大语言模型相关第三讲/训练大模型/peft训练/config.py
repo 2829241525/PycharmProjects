@@ -14,7 +14,7 @@ Config = {
     "hidden_size": 128,
     "kernel_size": 3,
     "num_layers": 2,
-    "epoch": 30,
+    "epoch": 2,
     "batch_size": 64,
     "tuning_tactics":"lora_tuning",
     # "tuning_tactics":"finetuing",

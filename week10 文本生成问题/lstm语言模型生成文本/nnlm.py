@@ -25,7 +25,7 @@ class LanguageModel(nn.Module):
     #当输入真实标签，返回loss值；无真实标签，返回预测值
     def forward(self, x, y=None):
         x = self.embedding(x)       #output shape:(batch_size, sen_len, input_dim)
-        x, _ = self.layer(x)        #output shape:(batch_size, sen_len, input_dim)
+        x, x2 = self.layer(x)        #output shape:(batch_size, sen_len, input_dim)
         y_pred = self.classify(x)   #output shape:(batch_size, vocab_size)
         if y is not None:
             return self.loss(y_pred.view(-1, y_pred.shape[-1]), y.view(-1))

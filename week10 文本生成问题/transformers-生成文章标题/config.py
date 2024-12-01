@@ -10,7 +10,7 @@ Config = {
     "model_path": "output",
     "input_max_length": 120,
     "output_max_length": 30,
-    "epoch": 200,
+    "epoch": 1000,
     "batch_size": 32,
     "optimizer": "adam",
     "learning_rate":1e-3,

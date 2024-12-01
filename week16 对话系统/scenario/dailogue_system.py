@@ -163,9 +163,13 @@ class DialogSystem:
 
     def generate_response(self, user_input, memory):
         memory["user_input"] = user_input
+        #意图识别、槽位抽取
         memory = self.nlu(memory)
+        #对话状态跟踪
         memory = self.dst(memory)
+        #对话策略
         memory = self.policy(memory)
+        #文本生成
         memory = self.nlg(memory)
         return memory["bot_response"], memory
 

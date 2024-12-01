@@ -112,8 +112,8 @@ print("diy模型计算loss：", diy_loss)
 
 # #设定优化器
 learning_rate = 0.1
-optimizer = torch.optim.SGD(torch_model.parameters(), lr=learning_rate)
-# optimizer = torch.optim.Adam(torch_model.parameters())
+#optimizer = torch.optim.SGD(torch_model.parameters(), lr=learning_rate)
+optimizer = torch.optim.Adam(torch_model.parameters())
 optimizer.zero_grad()
 #
 # #pytorch的反向传播操作
@@ -132,5 +132,5 @@ print(grad, "diy 计算梯度")
 #
 # #手动梯度更新
 # diy_update_w = diy_sgd(grad, numpy_model_w, learning_rate)
-# diy_update_w = diy_adam(grad, numpy_model_w)
-# print(diy_update_w, "diy更新权重")
+diy_update_w = diy_adam(grad, numpy_model_w)
+print(diy_update_w, "diy更新权重")

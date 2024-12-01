@@ -20,6 +20,7 @@ Config = {
     "learning_rate": 1e-5,
     "use_crf": False,
     "class_num": 9,
+    "use_crf": True,
     "bert_path": r"C:\Users\Lenovo\PycharmProjects\pythonProject\week6 语言模型\bert-base-chinese"
 }
 

@@ -63,6 +63,7 @@ class Evaluator:
             # 正确率 = 识别出的正确实体数 / 识别出的实体数
             # 召回率 = 识别出的正确实体数 / 样本的实体数
             precision = self.stats_dict[key]["正确识别"] / (1e-5 + self.stats_dict[key]["识别出实体数"])
+
             recall = self.stats_dict[key]["正确识别"] / (1e-5 + self.stats_dict[key]["样本实体数"])
             F1 = (2 * precision * recall) / (precision + recall + 1e-5)
             F1_scores.append(F1)

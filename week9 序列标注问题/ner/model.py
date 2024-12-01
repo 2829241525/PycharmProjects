@@ -19,6 +19,7 @@ class TorchModel(nn.Module):
         class_num = config["class_num"]
         num_layers = config["num_layers"]
         self.embedding = nn.Embedding(vocab_size, hidden_size, padding_idx=0)
+
         self.layer = nn.LSTM(hidden_size, hidden_size, batch_first=True, bidirectional=True, num_layers=num_layers)
         self.bert_like = BertModel.from_pretrained(config["pretrain_model_path"])
         self.classify = nn.Linear(hidden_size * 2, class_num)

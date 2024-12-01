@@ -43,7 +43,7 @@ class DiyBert:
         #embedding部分
         self.word_embeddings = state_dict["embeddings.word_embeddings.weight"].numpy() #词嵌入矩阵
         self.position_embeddings = state_dict["embeddings.position_embeddings.weight"].numpy() #位置嵌入矩阵
-        self.token_type_embeddings = state_dict["embeddings.token_type_embeddings.weight"].numpy() #token类型嵌入矩阵
+        self.token_type_embeddings = state_dict["embeddings.token_type_embeddings.weight"].numpy() #token类型嵌入矩阵，segment
         self.embeddings_layer_norm_weight = state_dict["embeddings.LayerNorm.weight"].numpy() #归一化层权重
         self.embeddings_layer_norm_bias = state_dict["embeddings.LayerNorm.bias"].numpy()
         self.transformer_weights = []
@@ -55,10 +55,14 @@ class DiyBert:
             k_b = state_dict["encoder.layer.%d.attention.self.key.bias" % i].numpy()
             v_w = state_dict["encoder.layer.%d.attention.self.value.weight" % i].numpy()
             v_b = state_dict["encoder.layer.%d.attention.self.value.bias" % i].numpy()
+            #注意力机制
             attention_output_weight = state_dict["encoder.layer.%d.attention.output.dense.weight" % i].numpy()
             attention_output_bias = state_dict["encoder.layer.%d.attention.output.dense.bias" % i].numpy()
+
+            #残差机制
             attention_layer_norm_w = state_dict["encoder.layer.%d.attention.output.LayerNorm.weight" % i].numpy()
             attention_layer_norm_b = state_dict["encoder.layer.%d.attention.output.LayerNorm.bias" % i].numpy()
+            #放缩线性层
             intermediate_weight = state_dict["encoder.layer.%d.intermediate.dense.weight" % i].numpy()
             intermediate_bias = state_dict["encoder.layer.%d.intermediate.dense.bias" % i].numpy()
             output_weight = state_dict["encoder.layer.%d.output.dense.weight" % i].numpy()
@@ -75,12 +79,15 @@ class DiyBert:
 
     #bert embedding，使用3层叠加，在经过一个Layer norm层
     def embedding_forward(self, x):
-        # x.shape = [max_len]
+        # x.shape = [max_len]，词嵌入
         we = self.get_embedding(self.word_embeddings, x)  # shpae: [max_len, hidden_size]
-        # position embeding的输入 [0, 1, 2, 3]
+        # position embeding的输入 [0, 1, 2, 3]，位置嵌入
         pe = self.get_embedding(self.position_embeddings, np.array(list(range(len(x)))))  # shpae: [max_len, hidden_size]
-        # token type embedding,单输入的情况下为[0, 0, 0, 0]
+        # token type embedding,单输入的情况下为[0, 0, 0, 0]，分段嵌入
         te = self.get_embedding(self.token_type_embeddings, np.array([0] * len(x)))  # shpae: [max_len, hidden_size]
+        print(self.word_embeddings,"|",x,"|-",self.position_embeddings,"|",np.array(list(range(len(x)))),"|-",self.token_type_embeddings,"|",np.array([0] * len(x)))
+        print("----------------")
+        print(we.shape, pe.shape, te.shape)
         embedding = we + pe + te #三者相加，所以顺序不重要
         # 加和后有一个归一化层
         embedding = self.layer_norm(embedding, self.embeddings_layer_norm_weight, self.embeddings_layer_norm_bias)  # shpae: [max_len, hidden_size]

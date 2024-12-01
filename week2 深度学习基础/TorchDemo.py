@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 规律：x是一个5维向量，如果第1个数>第5个数，则为正样本，反之为负样本
 
 """
-
+#PM 01:34
 
 class TorchModel(nn.Module):
     def __init__(self, input_size):

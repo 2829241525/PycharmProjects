@@ -7,7 +7,7 @@ import numpy as np
 """
 numpy手动实现模拟一个线性层
 """
-
+#PM 00:14:30
 #搭建一个2层的神经网络模型
 #每层都是线性层
 class TorchModel(nn.Module):

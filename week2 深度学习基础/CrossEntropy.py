@@ -10,13 +10,13 @@ target = [0, 2, 1, 1, 0]
 # 创建全零数组作为独热编码的起始点
 num_classes = 3  # 假设共有3个类别
 num_samples = len(target)
-one_hot_target = np.zeros((num_samples, num_classes), dtype=int)
-
-# 根据目标数据生成独热编码
-for i, t in enumerate(target):
-    one_hot_target[i][t] = 1
-
-print(one_hot_target)
+# one_hot_target = np.zeros((num_samples, num_classes), dtype=int)
+#
+# # 根据目标数据生成独热编码
+# for i, t in enumerate(target):
+#     one_hot_target[i][t] = 1
+#
+# print(one_hot_target)
 
 
 
