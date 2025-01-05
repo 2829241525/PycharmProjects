@@ -15,7 +15,7 @@ class SentenceEncoder(nn.Module):
         vocab_size = config["vocab_size"] + 1
         max_length = config["max_length"]
         self.embedding = nn.Embedding(vocab_size, hidden_size, padding_idx=0)
-        # self.lstm = nn.LSTM(hidden_size, hidden_size, batch_first=True, bidirectional=True)
+        self.lstm = nn.LSTM(hidden_size, hidden_size, batch_first=True, bidirectional=True)
         self.layer = nn.Linear(hidden_size, hidden_size)
         self.dropout = nn.Dropout(0.5)
 
@@ -23,9 +23,9 @@ class SentenceEncoder(nn.Module):
     def forward(self, x):
         x = self.embedding(x)
         #使用lstm
-        # x, _ = self.lstm(x)
+        x, _ = self.lstm(x)
         #使用线性层
-        x = self.layer(x)
+        #x = self.layer(x)
         # max pooling,先替换维度，将字符长度的维度替换到最外围，在对该维度进行目标窗口的池化（压缩）
         x = nn.functional.max_pool1d(x.transpose(1, 2), x.shape[1]).squeeze()
         return x
